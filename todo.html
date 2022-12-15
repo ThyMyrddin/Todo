@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+</head>
+<style>
+#tb,th{
+    border: 1px solid black;
+}
+
+table {
+    width: 700px;
+    margin-top: 50px;
+}
+section {
+    width: 50%;
+    height: 430px;
+    background-color: aquamarine;
+    margin: 130px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 200px;
+    padding-top: 20px;
+    border-radius: 2%;
+}
+</style>
+<body>
+    <section>
+    <table id="tb">
+        <tr>
+            <th>TASKS</th>
+            <th>CHECK</th>
+        </tr>
+    </table>
+    <form>
+        <input type="text" id="name" placeholder="TASK NAME">
+        <input type="textarea" id="description" placeholder="TASK DESCRIPTION">
+    </form>
+    <button id="bu" disabled="TRUE">ADD TASK</button>
+    <button id="del">DELETE CHECKED TASKS</button>
+</section>
+
+    <script>
+        const add = document.getElementById('bu');
+        const del = document.getElementById('del');
+        const tr = document.getElementsByTagName('tr');
+        const table = document.getElementById('tb');
+        const name = document.getElementById('name');
+        const desc = document.getElementById('description');
+        const done = document.getElementsByClassName('check');
+     
+
+        function newcol(){
+                let t = document.createElement('tr');
+                let tdi = document.createElement('td');
+                let tdi1 = document.createElement('td');
+                let h = document.createElement('h1');
+                let po = document.createElement('p');
+                let d = document.createElement('input');
+                d.setAttribute('type','checkbox');
+                d.classList.add('check');
+                h.textContent=name.value;
+                po.textContent=desc.value;
+                t.appendChild(tdi);
+                tdi.appendChild(h);
+                tdi.appendChild(po);
+                t.appendChild(tdi1);
+                tdi1.appendChild(d);
+                return t;
+
+        }
+        
+            add.addEventListener('click',()=> {
+                let coll = newcol();
+                table.appendChild(coll);
+                name.value=""
+                desc.value=""
+                add.setAttribute('disabled','TRUE');
+            });
+
+            name.addEventListener('input',($event)=>{
+                
+                if($event.target.value!=""){
+                    add.removeAttribute('disabled');
+                }
+                if($event.target.value==""){
+                    add.setAttribute('disabled','TRUE');
+                }
+            })
+
+
+
+
+            del.addEventListener('click',()=>{
+                let nb = table.childElementCount;
+                for(let i=0;i<=nb;i++){
+                    if(done[i].checked){
+                        table.removeChild(tr[i+1]);
+                    }
+                }
+            })
+    
+    
+    </script>    
+</body>
+
+</html>

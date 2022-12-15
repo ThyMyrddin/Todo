@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+</head>
+<style>
+table {
+    width: 600px;
+    margin-top: 50px;
+}
+tr {
+    text-align: center;
+    cursor: pointer;
+}
+tr:hover {
+    transform: scale(1.01);
+}
+section {
+
+    background-color: rgb(192, 187, 187);
+    margin: 130px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 200px;
+    padding-top: 20px;
+    border-radius: 2%;
+    text-align: center;
+    width: 80%px;
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+   
+}
+td {
+    border: outset 5px;
+}
+#bu {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+#bu:hover {
+  background-color: #bbb;
+}
+input,#pr {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 50%;
+  padding: 11px;
+  float: left;
+  font-size: 16px;
+}
+#pr {
+    clear: both;
+}
+</style>
+<body>
+    <section>
+        <h1>TO-DO</h1>
+        <form>
+            <input type="text" id="name" placeholder="TASK NAME">
+            <button id="bu" disabled="TRUE">ADD TASK</button><br>
+            <select name="priority" id="pr">
+                <option value="rgb(151, 146, 146)">No priority (default)</option>
+                <option value="rgb(255, 52, 52)">Top priority</option>
+                <option value="rgb(255, 150, 51)">Medium priority</option>
+            </select>
+            <br><br>
+        </form>
+
+    <table id="tb">
+
+    </table>
+</section>
+
+    <script>
+        const pri = document.getElementById('pr');
+        const add = document.getElementById('bu');
+        const tr = document.getElementsByTagName('tr');
+        const table = document.getElementById('tb');
+        const name = document.getElementById('name');
+     
+
+        function newcol(){
+            let color = pri.value ;
+                let t = document.createElement('tr');
+                let tdi = document.createElement('td');
+                let h = document.createElement('h1');
+                t.setAttribute('onclick','check(this)');
+                t.setAttribute('ondblclick','rem(this)');
+                t.style.backgroundColor=color;
+                h.textContent=name.value;
+                t.appendChild(tdi);
+                tdi.appendChild(h);
+                return t;
+
+        }
+
+        
+            add.addEventListener('click',(event)=> {
+                event.preventDefault();
+                let coll = newcol();
+                table.appendChild(coll);
+                name.value=""
+                desc.value=""
+                add.setAttribute('disabled','TRUE');
+            });
+
+            name.addEventListener('input',($event)=>{
+                
+                if($event.target.value!=""){
+                    add.removeAttribute('disabled');
+                }
+                if($event.target.value==""){
+                    add.setAttribute('disabled','TRUE');
+                }
+            })
+
+
+
+            function check(here){
+                here.style.backgroundColor='rgb(30, 243, 30)';
+            }
+
+            function rem(here){
+                here.style.display='none';
+            }
+
+
+            name.addEventListener("keypress", function(event) {
+               if (event.key === "Enter") {
+               event.preventDefault();
+               add.click();
+               add.setAttribute('disabled','TRUE');
+             }
+            });
+
+    
+    
+    </script>    
+</body>
+
+</html>
